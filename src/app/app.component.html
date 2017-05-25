@@ -1,0 +1,42 @@
+<md-sidenav-container>
+    <md-sidenav #sidenav>
+        <nav>
+            <a [routerLink]=" ['./'] "
+                routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+                Index
+            </a>
+            <a [routerLink]=" ['./home'] "
+                routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+                Home
+            </a>
+            <a [routerLink]=" ['./settings'] "
+                routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+                Settings
+            </a>
+            <a [routerLink]=" ['./about'] "
+                routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+                About
+            </a>
+        </nav>
+    </md-sidenav>
+
+    <md-toolbar>
+        <button md-mini-fab class="pool-toolbar-button" (click)="sidenav.open()">
+            <md-icon>menu</md-icon>
+        </button>
+        <span>{{title}}</span>
+    </md-toolbar>
+
+    <main style="height: 3000px">
+      <router-outlet></router-outlet>
+    </main>
+
+    <footer>
+      <span>WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a></span>
+      <div>
+        <a [href]="url">
+          <img [src]="angularclassLogo" width="25%">
+        </a>
+      </div>
+    </footer>
+</md-sidenav-container>

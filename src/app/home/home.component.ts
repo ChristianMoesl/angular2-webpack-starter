@@ -3,9 +3,11 @@ import {
   OnInit
 } from '@angular/core';
 
-import { AppState } from '../app.service';
 import { Title } from './title';
 import { XLargeDirective } from './x-large';
+import { AppState } from '../app.store';
+import { Store } from '@ngrx/store';
+import { ADD_SETTING } from '../+settings/settings.reducer';
 
 @Component({
   // The selector is what angular internally uses
@@ -24,20 +26,30 @@ import { XLargeDirective } from './x-large';
 export class HomeComponent implements OnInit {
   // Set our default values
   public localState = { value: '' };
+  private i = 0;
+
   // TypeScript public modifiers
   constructor(
-    public appState: AppState,
-    public title: Title
+    public title: Title,
+    private store: Store<AppState>
   ) {}
 
   public ngOnInit() {
     console.log('hello `Home` component');
     // this.title.getData().subscribe(data => this.data = data);
+    setInterval(() => {
+      this.store.dispatch({ type: ADD_SETTING, payload: {
+        id: this.i, name: `${this.i}. Setting`, group: '', setting: true
+      }});
+      this.i++;
+      console.log(this.i);
+    }, 3000);
   }
 
   public submitState(value: string) {
-    console.log('submitState', value);
-    this.appState.set('value', value);
-    this.localState.value = '';
+    console.log('submitState ', value);
+ //   this.appState.set('value', value);
+    this.localState.value = ' ';
   }
+
 }
