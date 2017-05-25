@@ -18,6 +18,7 @@ import {
   RouterModule,
   PreloadAllModules
 } from '@angular/router';
+import { RoomService } from './room.service';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -40,7 +41,7 @@ import '../styles/headings.css';
 
 // Application wide providers
 const APP_PROVIDERS = [
-  ...APP_RESOLVER_PROVIDERS
+  RoomService, ...APP_RESOLVER_PROVIDERS
 ];
 
 /**

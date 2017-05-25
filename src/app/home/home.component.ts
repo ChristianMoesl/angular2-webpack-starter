@@ -6,6 +6,7 @@ import {
 import { Title } from './title';
 import { XLargeDirective } from './x-large';
 import { AppState } from '../app.store';
+import { RoomService } from '../room.service';
 import { Store } from '@ngrx/store';
 import { ADD_SETTING } from '../+settings/settings.reducer';
 
@@ -31,18 +32,20 @@ export class HomeComponent implements OnInit {
   // TypeScript public modifiers
   constructor(
     public title: Title,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private room: RoomService
   ) {}
 
   public ngOnInit() {
     console.log('hello `Home` component');
     // this.title.getData().subscribe(data => this.data = data);
     setInterval(() => {
-      this.store.dispatch({ type: ADD_SETTING, payload: {
+     /* this.store.dispatch({ type: ADD_SETTING, payload: {
         id: this.i, name: `${this.i}. Setting`, group: '', setting: true
       }});
       this.i++;
-      console.log(this.i);
+      console.log(this.i);*/
+      this.room.send();
     }, 3000);
   }
 

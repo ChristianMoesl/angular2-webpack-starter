@@ -1,22 +1,30 @@
 <md-sidenav-container>
     <md-sidenav #sidenav>
         <nav>
-            <a [routerLink]=" ['./'] "
-                routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-                Index
-            </a>
-            <a [routerLink]=" ['./home'] "
-                routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-                Home
-            </a>
-            <a [routerLink]=" ['./settings'] "
-                routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-                Settings
-            </a>
-            <a [routerLink]=" ['./about'] "
-                routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-                About
-            </a>
+            <li>
+                <a [routerLink]=" ['./'] "
+                    routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+                    Index
+                </a>
+            </li>
+            <li>
+                <a [routerLink]=" ['./home'] "
+                    routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a [routerLink]=" ['./settings'] "
+                    routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+                    Settings
+                </a>
+            </li>
+            <li>
+                <a [routerLink]=" ['./about'] "
+                    routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+                    About
+                </a>
+            </li>
         </nav>
     </md-sidenav>
 

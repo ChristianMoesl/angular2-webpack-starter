@@ -21,10 +21,6 @@ $theme: mat-light-theme($primary, $accent);
   @include angular-material-theme($dark-theme);
 }
 
-a.active {
-  background-color: gray;
-}
-
 html { 
   height: 100%;
   margin: 0;
@@ -49,15 +45,41 @@ body {
     -moz-osx-font-smoothing: grayscale;
   }
 
-  mat-sidenav {
-    min-width: 15%;
+  md-sidenav {
+    min-width: 15% !important;
 
-    [mat-button] {
+    nav {
+      width: 100%;
+      list-style-type: none;
+    }
+
+    li {
+      display: block;
+    }
+
+    nav li a {
+      display: block;
+      border-bottom: thin solid gray;
+      border-top: thin solid grey;
+      border-radius: 0;
+      background: transparent;
+      margin: 0;
+    }
+
+    nav li a.active {
+      background-color: transparent;
+    }
+  }
+
+  mat-sidenav {
+    min-width: 30%;
+
+/*    [mat-button] {
       width: 100%;
       position: relative;
       bottom: 0;
       margin: 24px 0;
-    }
+    }*/
   }
 
   .demo-content {
