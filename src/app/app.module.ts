@@ -3,6 +3,7 @@ import 'hammerjs';
 import { MaterialModule } from '@angular/material';
 
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {
@@ -18,7 +19,17 @@ import {
   RouterModule,
   PreloadAllModules
 } from '@angular/router';
-import { RoomService } from './room.service';
+
+/*
+ * Services
+ */
+import { SettingsService } from './services/settings.service';
+import { RoomService } from './services/room.service';
+
+/*
+ * Effects
+ */
+import { SettingEffects } from './effects/settings';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -35,13 +46,14 @@ import { XLargeDirective } from './home/x-large';
 import { AppState, rootReducer } from './app.store';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
 
 // Application wide providers
 const APP_PROVIDERS = [
-  RoomService, ...APP_RESOLVER_PROVIDERS
+  SettingsService, RoomService, ...APP_RESOLVER_PROVIDERS
 ];
 
 /**
@@ -61,8 +73,10 @@ const APP_PROVIDERS = [
     StoreDevtoolsModule.instrumentOnlyWithExtension({
       maxAge: 5
     }),
+    EffectsModule.run(SettingEffects),
     MaterialModule,
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })

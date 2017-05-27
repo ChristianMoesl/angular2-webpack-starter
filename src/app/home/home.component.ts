@@ -6,7 +6,7 @@ import {
 import { Title } from './title';
 import { XLargeDirective } from './x-large';
 import { AppState } from '../app.store';
-import { RoomService } from '../room.service';
+import { RoomService } from '../services/room.service';
 import { Store } from '@ngrx/store';
 import { ADD_SETTING } from '../+settings/settings.reducer';
 
@@ -36,17 +36,13 @@ export class HomeComponent implements OnInit {
     private room: RoomService
   ) {}
 
-  public ngOnInit() {
-    console.log('hello `Home` component');
+  public async ngOnInit() {
+  //  await this.room.connect('settings');
     // this.title.getData().subscribe(data => this.data = data);
-    setInterval(() => {
-     /* this.store.dispatch({ type: ADD_SETTING, payload: {
-        id: this.i, name: `${this.i}. Setting`, group: '', setting: true
-      }});
-      this.i++;
-      console.log(this.i);*/
-      this.room.send();
-    }, 3000);
+   // setInterval(async () => {
+ //     let msg = await this.room.get();
+  //    console.log(msg);
+  //  }, 3000);
   }
 
   public submitState(value: string) {

@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 
 import { routes } from './settings.routes';
 import { SettingsComponent } from './settings.component';
+import { MaterialModule } from '@angular/material';
+import { BrowserModule } from '@angular/platform-browser';
 
 console.log('`Detail` bundle loaded asynchronously');
 
@@ -15,6 +17,7 @@ console.log('`Detail` bundle loaded asynchronously');
   ],
   imports: [
     CommonModule,
+    MaterialModule,
     FormsModule,
     RouterModule.forChild(routes),
   ],

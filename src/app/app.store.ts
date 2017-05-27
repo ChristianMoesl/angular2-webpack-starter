@@ -1,7 +1,7 @@
 import { compose } from '@ngrx/core/compose';
 import { ActionReducer, combineReducers } from '@ngrx/store';
 
-import { SettingsState, settingsReducer } from './+settings/settings.reducer';
+import { SettingsState, settingsReducer } from './reducers/settings';
 
 export interface AppState {
     settings: SettingsState;
