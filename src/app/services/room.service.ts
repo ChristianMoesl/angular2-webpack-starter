@@ -39,7 +39,7 @@ export class RoomService {
     }
 
     public async get(version: Version = new Version(1, 0)): Promise<object | Error> {
-        const promise = new Promise<object>((resolve, reject) => {
+        const promise = new Promise<object | Error>((resolve, reject) => {
             assert(this.resolver === null);
             assert(this.rejecter === null);
 
@@ -48,6 +48,22 @@ export class RoomService {
         });
 
         const msg = new Message(Command.GET, this.room, version);
+
+        this.socket.emit('client-message', msg.serialize());
+
+        return promise;
+    }
+
+    public async post(data: Object, version: Version = new Version(1, 0)): Promise<object | Error> {
+        const promise = new Promise<Error | undefined>((resolve, reject) => {
+            assert(this.resolver === null);
+            assert(this.rejecter === null);
+
+            this.resolver = resolve;
+            this.rejecter = reject;
+        });
+
+        const msg = new Message(Command.POST, this.room, version, data);
 
         this.socket.emit('client-message', msg.serialize());
 
@@ -70,29 +86,48 @@ export class RoomService {
         }
     }
 
-    private onReceive(data: object) {
-        if (this.resolver === null) {
-            try {
-                const msg = Message.deserialize(data);
+    private processAnswer(msg: Message) {
+        switch (msg.getCommand()) {
+            case Command.ACK:
+                this.resolver(msg.getData());
+                break;
+            case Command.NAK:
+                if (msg.getData().hasOwnProperty('error')) {
+                    let tmp: any = msg.getData();
+                    this.rejecter(new Error(tmp.error.msg));
+                } else {
+                    this.rejecter(new Error('Received unkown nak format'));
+                }
+                break;
+            default:
+                throw RangeError(`Unkown command ${msg.getCommand()}`);
+        }
 
-                if (msg.isAnswer()) {
+        this.resolver = null;
+        this.rejecter = null;
+    }
+
+    private onReceive(data: object) {
+        let msg: Message;
+        try {
+            msg = Message.deserialize(data);
+
+            if (msg.isAnswer()) {
+                if (this.resolver === null) {
                     console.warn(`Got unexpected message`);
                 } else {
-                    this.processRequest(msg);
+                    this.processAnswer(msg);
                 }
-            } catch (e) {
-                console.warn(e);
+            } else {
+                this.processRequest(msg);
             }
-        } else {
-            try {
-                const msg = Message.deserialize(data);
-                this.resolver(msg.getData());
-            } catch (e) {
+        } catch (e) {
+            if (this.resolver !== null) {
                 this.rejecter(e);
+                this.rejecter = null;
+                this.resolver = null;
             }
-
-            this.resolver = null;
-            this.rejecter = null;
+            console.warn(e);
         }
     }
 }

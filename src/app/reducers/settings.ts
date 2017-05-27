@@ -17,7 +17,7 @@ const initialState: SettingsState = {
 
 export function settingsReducer(state: SettingsState = initialState, action: Action): SettingsState {
     switch (action.type) {
-        case Actions.UPDATE_COMPLETE:
+        case Actions.UPDATE_COMPLETED:
             return {
                 ...state,
                 settings: action.payload,
@@ -28,6 +28,17 @@ export function settingsReducer(state: SettingsState = initialState, action: Act
                 ...state,
                 isValid: false,
             };
+        case Actions.CHANGE_COMPLETED:
+            let tmp = {
+                ...state,
+                settings: {
+                    ...state.settings,
+                }
+            };
+
+            tmp.settings[action.payload.name] = action.payload.value;
+
+            return tmp;
         default:
             return state;
     }

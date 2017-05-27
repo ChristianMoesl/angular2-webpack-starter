@@ -16,4 +16,16 @@ export class SettingsService {
                 return null;
             });
     }
+
+    public async post(name: string, value: object): Promise<boolean> {
+        let data = {};
+        data[name] = value;
+
+        return this.room.post(data)
+            .then((result) => {
+                return true;
+            }, (rej) => {
+                return false;
+            });
+    }
 }

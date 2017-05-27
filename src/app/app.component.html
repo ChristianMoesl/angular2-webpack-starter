@@ -3,25 +3,25 @@
         <nav>
             <li>
                 <a [routerLink]=" ['./'] "
-                    routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-                    Index
-                </a>
-            </li>
-            <li>
-                <a [routerLink]=" ['./home'] "
-                    routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+                    routerLinkActive="active" 
+                    (click)="sidenav.close()"
+                    [routerLinkActiveOptions]= "{exact: true}">
                     Home
                 </a>
             </li>
             <li>
                 <a [routerLink]=" ['./settings'] "
-                    routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+                    routerLinkActive="active" 
+                    (click)="sidenav.close()"
+                    [routerLinkActiveOptions]= "{exact: true}">
                     Settings
                 </a>
             </li>
             <li>
                 <a [routerLink]=" ['./about'] "
-                    routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+                    routerLinkActive="active" 
+                    (click)="sidenav.close()"
+                    [routerLinkActiveOptions]= "{exact: true}">
                     About
                 </a>
             </li>
