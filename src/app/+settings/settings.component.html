@@ -1,6 +1,24 @@
-<h1>Hello from Settings</h1>
-<md-input-container>
-  <input mdInput placeholder="" type="time"
-      [(ngModel)]="pumpTime"
-      (blur)="saveSetting('pumpTime')">
-</md-input-container>
+<md-card>
+  <md-card-content>
+    <h2>Hello from Settings</h2>
+    <md-input-container>
+      <input mdInput placeholder="" type="time"
+          [(ngModel)]="pumpTime"
+          (blur)="saveSetting('pumpTime')">
+    </md-input-container>
+    <md-input-container>
+      <input mdInput placeholder="" type="time"
+        [(ngModel)]="pumpIntervall"
+        (blur)="saveSetting('pumpIntervall')">
+    </md-input-container>
+    <md-slide-toggle
+    class="example-margin"
+      [color]="color"
+      [checked]="checked"
+      [disabled]="disabled"
+      [(ngModel)]="automaticEnabled"
+      (click)="saveSetting('operationMode')">
+      Slide me!
+    </md-slide-toggle>
+  </md-card-content>
+</md-card>
