@@ -23,11 +23,16 @@ console.log('`Settings` component loaded asynchronously');
 })
 export class SettingsComponent {
   public pumpTime: string;
+  public pumpIntervall: string;
+  public automaticEnabled: boolean;
 
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new Settings.UpdateAction());
     this.store.subscribe((s) => {
-      this.pumpTime = this.numberToTime(s.settings.settings.pumpTime);
+      if (s.settings.isValid) {
+        this.pumpTime = this.numberToTime(s.settings.settings.pumpTime);
+        this.pumpIntervall = this.numberToTime(s.settings.settings.pumpIntervall);
+      }
     });
   }
 
@@ -35,6 +40,12 @@ export class SettingsComponent {
     switch (setting) {
       case 'pumpTime':
         this.store.dispatch(new Settings.ChangeAction('pumpTime', this.timeToNumber(this.pumpTime)));
+        break;
+      case 'pumpIntervall':
+        this.store.dispatch(new Settings.ChangeAction('pumpIntervall', this.timeToNumber(this.pumpIntervall)));
+        break;
+      case 'operationMode':
+        this.store.dispatch(new Settings.ChangeAction('pumpIntervall', this.timeToNumber(this.pumpIntervall)));
         break;
       default:
         console.error('Unkown setting won\'t be saved');
