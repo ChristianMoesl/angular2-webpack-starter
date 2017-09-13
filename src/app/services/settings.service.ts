@@ -23,7 +23,7 @@ export class SettingsService {
 
         return this.room.post(data)
             .then((result) => {
-                return true;
+                return !(result as any).hasOwnProperty('error');
             }, (rej) => {
                 return false;
             });
