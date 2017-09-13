@@ -10,28 +10,28 @@ export class SettingEffects {
 
     @Effect()
     public update$: Observable<Action> = this.actions$
-        .ofType(Settings.UPDATE)
+        .ofType<Settings.UpdateAction>(Settings.UPDATE)
+        .map((action: Settings.UpdateAction) => action.payload)
         .switchMap(async (action) => {
             const answer = await this.settingsService.retreiveAll();
 
-            if (answer) {
+            if (answer)
                 return new Settings.UpdateCompletedAction(answer);
-            }
+
             return new Settings.UpdateFailedAction();
         });
 
     @Effect()
     public change$: Observable<Action> = this.actions$
-        .ofType(Settings.CHANGE)
-        .map((action) => action.payload)
+        .ofType<Settings.ChangeAction>(Settings.CHANGE)
+        .map((action: Settings.ChangeAction) => action.payload)
         .switchMap(async (action) => {
             const answer = await this.settingsService.post(action.name, action.value);
 
-            if (answer) {
-                return new Settings.ChangeFailedAction();
-            }
+            if (answer)
+                return new Settings.ChangeCompletedAction(action.name, action.value);
 
-            return new Settings.ChangeCompletedAction(action.name, action.value);
+            return new Settings.ChangeFailedAction();
         });
 
     constructor(private actions$: Actions, private settingsService: SettingsService) { }

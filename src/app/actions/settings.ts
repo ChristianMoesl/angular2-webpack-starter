@@ -11,6 +11,7 @@ export const CHANGE_FAILED = '[Settings] change failed';
 
 export class UpdateAction implements Action {
     public readonly type = UPDATE;
+    public payload = null;
 }
 
 export class UpdateCompletedAction implements Action {
@@ -25,7 +26,7 @@ export class UpdateFailedAction implements Action {
 
 export class ChangeAction implements Action {
     public readonly type = CHANGE;
-    public payload: object;
+    public payload: {name: string, value: any};
 
     constructor(name: string, value: any) {
         this.payload = {
@@ -37,7 +38,7 @@ export class ChangeAction implements Action {
 
 export class ChangeCompletedAction implements Action {
     public readonly type = CHANGE_COMPLETED;
-    public payload: object;
+    public payload: {name: string, value: any};
 
     constructor(name: string, value: any) {
         this.payload = {
@@ -50,3 +51,5 @@ export class ChangeCompletedAction implements Action {
 export class ChangeFailedAction implements Action {
     public readonly type = CHANGE_FAILED;
 }
+
+export type Actions = UpdateAction | UpdateCompletedAction | UpdateFailedAction | ChangeAction | ChangeCompletedAction | ChangeFailedAction;

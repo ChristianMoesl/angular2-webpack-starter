@@ -1,5 +1,6 @@
 // Material 2
 import 'hammerjs';
+import 'rxjs';
 import { MaterialModule } from '@angular/material';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -43,7 +44,7 @@ import { HomeComponent } from './home';
 import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
-import { AppState, rootReducer } from './app.store';
+import { AppState, reducers, initialState } from './app.store';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
@@ -69,11 +70,9 @@ const APP_PROVIDERS = [
     XLargeDirective
   ],
   imports: [ // import Angular's modules
-    StoreModule.provideStore(rootReducer),
-    StoreDevtoolsModule.instrumentOnlyWithExtension({
-      maxAge: 5
-    }),
-    EffectsModule.run(SettingEffects),
+    StoreModule.forRoot(reducers, { initialState }),
+    StoreDevtoolsModule.instrument({ maxAge: 5 }),
+    EffectsModule.forRoot([SettingEffects]),
     MaterialModule,
     BrowserModule,
     BrowserAnimationsModule,
